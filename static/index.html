@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Airsoft Control Center</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-gray-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-bold">Airsoft Control Center</h1>
+      <div id="wsStatus" class="text-sm opacity-80">connecting…</div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-4 space-y-6">
+    <section class="bg-white rounded-2xl shadow p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Targets</h2>
+        <div class="text-sm text-gray-500">Select active targets, set LED</div>
+      </div>
+      <div id="targets" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Players</h2>
+        <form id="addPlayerForm" class="flex space-x-2">
+          <input id="playerName" class="border rounded px-3 py-2" placeholder="Player name" required />
+          <button class="bg-gray-900 text-white rounded px-4">Add</button>
+        </form>
+      </div>
+      <div id="players" class="space-y-2"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold">Game Modes</h2>
+        <div id="gameState" class="text-sm text-gray-500"></div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <select id="mode" class="border rounded px-3 py-2">
+          <option value="free_play">Free Play</option>
+          <option value="race_to_n">Race to N</option>
+          <option value="time_attack">Time Attack</option>
+        </select>
+        <input id="paramA" class="border rounded px-3 py-2" placeholder="N=10 / seconds=30">
+        <button id="startGame" class="bg-green-600 text-white rounded px-4 py-2">Start</button>
+        <button id="stopGame" class="bg-red-600 text-white rounded px-4 py-2">Stop</button>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold mb-2">Scores by Target</h3>
+          <div id="scoresTargets" class="space-y-1 text-sm"></div>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">Scores by Player</h3>
+          <div id="scoresPlayers" class="space-y-1 text-sm"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-4">
+      <h2 class="text-lg font-semibold mb-3">Live Feed</h2>
+      <div id="feed" class="text-sm space-y-1 max-h-64 overflow-auto border rounded p-2 bg-gray-50"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

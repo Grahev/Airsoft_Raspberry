@@ -1,0 +1,46 @@
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS targets (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  system_id TEXT NOT NULL,
+  target_id TEXT NOT NULL,
+  name TEXT,
+  active INTEGER NOT NULL DEFAULT 1,
+  led_color TEXT NOT NULL DEFAULT '#FF0000',
+  led_time_ms INTEGER NOT NULL DEFAULT 1000,
+  last_seen REAL,
+  UNIQUE(system_id, target_id)
+);
+
+CREATE TABLE IF NOT EXISTS players (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  created_at REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS games (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mode TEXT NOT NULL,
+  params_json TEXT NOT NULL,
+  started_ts REAL NOT NULL,
+  ended_ts REAL,
+  active INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS game_players (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  game_id INTEGER NOT NULL REFERENCES games(id) ON DELETE CASCADE,
+  player_id INTEGER NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+  target_key TEXT,
+  UNIQUE(game_id, player_id)
+);
+
+CREATE TABLE IF NOT EXISTS hits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts REAL NOT NULL,
+  game_id INTEGER REFERENCES games(id) ON DELETE SET NULL,
+  system_id TEXT NOT NULL,
+  target_id TEXT NOT NULL,
+  amp INTEGER,
+  player_id INTEGER REFERENCES players(id) ON DELETE SET NULL
+);
